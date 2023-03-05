@@ -5,38 +5,25 @@ import java.util.Random;
 
 public class Simulation {
 
-    private AgentMap[] agentMaps;
-    private TrailMap[] trailMaps;
+    private AgentMap agentMap;
+    private TrailMap trailMap;
 
     public Simulation(int height, int width){
-        agentMaps = new AgentMap[3];
-        trailMaps = new TrailMap[3];
-        Color[] colorArray = new Color[]{Color.BLUE, Color.CYAN, Color.DARK_GRAY};
-        Random random = new Random();
-
-        for(int i = 0; i < 3; i++){
-            agentMaps[i] = new AgentMap(10000, height, width, random.nextDouble()*360,
-                    random.nextDouble()*360,
-                    random.nextDouble()*50,
-                    random.nextDouble()*50,
-                    random.nextDouble(), colorArray[i]);
-            trailMaps[i] = new TrailMap(height, width, random.nextDouble());
-        }
-
+        agentMap = new AgentMap(30000, height, width, 60,
+                60,
+                5,
+                5,
+                1,
+                Color.DARK_GRAY);;
+        trailMap = new TrailMap(height, width, 0.8);
     }
 
     public void tick(){
-        for (int i = 0; i < 3; i++) {
-            agentMaps[i].tick(i, trailMaps);
-            trailMaps[i].tick();
-        }
+        agentMap.tick(trailMap);
+        trailMap.tick();
     }
 
     public void render(Graphics graphics){
-        for (int i = 0; i < 3; i++) {
-            agentMaps[i].render(graphics);
-
-            //TODO: render the trailmaps
-        }
+        agentMap.render(graphics);
     }
 }

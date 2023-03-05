@@ -1,5 +1,7 @@
 package Simulation;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Agent {
@@ -44,27 +46,20 @@ public class Agent {
         return heading;
     }
 
-    public void tick(int currentIndex, TrailMap[] trailMaps, double sense_angle, double sense_distance, double step_angle, double step_size, double amount) {
+    public void tick(TrailMap  trailMaps, double sense_angle,
+                     double sense_distance, double step_angle, double step_size, double amount) {
         //get the three positions
         int[] leftCoordinate = angleToDiscreteCoordinate(heading-sense_angle, sense_distance);
         int[] middleCoordinate = angleToDiscreteCoordinate(heading, sense_distance);
         int[] rightCoordinate = angleToDiscreteCoordinate(heading+sense_angle, sense_distance);
 
-        double leftPheromone = 0;
-        double middlePheromone = 0;
-        double rightPheromone = 0;
 
-        for (int i = 0; i < 3; i++) {
-            if (i == currentIndex){
-                leftPheromone += trailMaps[i].getPheromoneValue(leftCoordinate);
-                middlePheromone += trailMaps[i].getPheromoneValue(middleCoordinate);
-                rightPheromone += trailMaps[i].getPheromoneValue(rightCoordinate);
-            }else {
-                leftPheromone -= trailMaps[i].getPheromoneValue(leftCoordinate);
-                middlePheromone -= trailMaps[i].getPheromoneValue(middleCoordinate);
-                rightPheromone -= trailMaps[i].getPheromoneValue(rightCoordinate);
-            }
-        }
+        // calculate pheromone value of the tree positions
+        // add pheromone of current agent
+        double leftPheromone = trailMaps.getPheromoneValue(leftCoordinate);
+        double middlePheromone = trailMaps.getPheromoneValue(middleCoordinate);
+        double rightPheromone = trailMaps.getPheromoneValue(rightCoordinate);
+
 
         //identify the case for the next movement
         if (middlePheromone > leftPheromone && middlePheromone > rightPheromone) {
@@ -86,7 +81,7 @@ public class Agent {
         this.y += angleToContinuousCoordinate(heading, step_size)[1];
 
         boundCoordinates();
-        trailMaps[currentIndex].deposit(x, y, amount);
+        trailMaps.deposit(x, y, amount);
     }
 
     private void boundCoordinates() {

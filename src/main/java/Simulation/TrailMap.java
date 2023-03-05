@@ -75,6 +75,7 @@ public class TrailMap {
         for (var row = 0; row < trailMap.length; row++) {
             for (var col = 0; col < trailMap[row].length; col++) {
                 image.setRGB(col, row, doubleToRGB(trailMap[row][col]));
+                //image.setRGB(col, row, doubleToRGB(trailMap[row][col]));
             }
         }
 
@@ -85,6 +86,11 @@ public class TrailMap {
         float hue = (float) (d / 1.5);
         float saturation = 1;
         float brightness = 1;
-        return Color.HSBtoRGB(hue, saturation, brightness);
+
+        //return Color.HSBtoRGB(hue, saturation, brightness);
+        if(d < 0.5)
+            return Color.BLACK.getRGB();
+        else
+            return Color.WHITE.getRGB();
     }
 }

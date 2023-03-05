@@ -10,6 +10,5 @@ public class MainSimulator {
         //Game Loop for all the agents
 
         new SimulationDisplay(2000, 123, 12, 6,5, 1, 0.99);
-
     }
 }

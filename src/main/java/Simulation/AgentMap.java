@@ -1,7 +1,9 @@
 package Simulation;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class AgentMap {
     private LinkedList<Agent> agentList;
@@ -15,15 +17,17 @@ public class AgentMap {
     private Color particleColor;
 
     /**
-     * This constructor generates an {@link Agent} list with the given number.
+     * This constructor generates an {@link Agent} list for the given number of agents.
      *
      * @param number Number of Agents used for this simulation.
      */
-    public AgentMap(long number, int height, int width, double step_angle, double sense_angle, double sense_distance, double step_size,
-                    double pheromoneAmount, Color particleColor) {
+    public AgentMap(long number, int height, int width, double step_angle, double sense_angle, double sense_distance,
+                    double step_size, double pheromoneAmount, Color particleColor) {
         agentList = new LinkedList<>();
+
+        Random random = new Random();
         for (int i = 0; i < number; i++) {
-            agentList.add(new Agent(500, 500, height, width));
+            agentList.add(new Agent(random.nextInt(height), random.nextInt(width), height, width));
         }
 
         this.sense_angle = sense_angle;
@@ -34,9 +38,9 @@ public class AgentMap {
         this.particleColor = particleColor;
     }
 
-    public void tick(int currentIndex, TrailMap[] trailMaps) {
+    public void tick(TrailMap trailMap) {
         for (Agent agent : agentList) {
-            agent.tick(currentIndex, trailMaps, sense_angle, sense_distance, step_angle, step_size, pheromoneAmount);
+            agent.tick(trailMap, sense_angle, sense_distance, step_angle, step_size, pheromoneAmount);
         }
     }
 
