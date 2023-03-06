@@ -1,29 +1,37 @@
 package Simulation;
 
 import java.awt.*;
-import java.util.Random;
 
+/**
+ * This class implements the general handling of a simulation with one or more populations.
+ */
 public class Simulation {
 
-    private AgentMap agentMap;
-    private TrailMap trailMap;
+    private final Population pop;
 
-    public Simulation(int height, int width){
-        agentMap = new AgentMap(30000, height, width, 60,
-                60,
-                5,
-                5,
-                1,
-                Color.DARK_GRAY);;
-        trailMap = new TrailMap(height, width, 0.8);
+    /**
+     * Basic constructor that generates one population with the given dimensions.
+     *
+     * @param height height of the simulation space
+     * @param width  width of the simulation space
+     */
+    public Simulation(int height, int width) {
+        this.pop = new Population(height, width);
     }
 
-    public void tick(){
-        agentMap.tick(trailMap);
-        trailMap.tick();
+    /**
+     * This method implements one simulation step.
+     */
+    public void tick() {
+        pop.tick();
     }
 
-    public void render(Graphics graphics){
-        agentMap.render(graphics);
+    /**
+     * This method calls all the objects that need to be rendered.
+     *
+     * @param graphics graphic onto it is renders
+     */
+    public void render(Graphics graphics) {
+        pop.render(graphics);
     }
 }
