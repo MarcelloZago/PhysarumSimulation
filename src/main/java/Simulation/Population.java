@@ -21,7 +21,7 @@ public class Population {
         Random random = new Random();
 
         this.agentMap = new AgentMap(10000,
-                0, 0,
+                height, width,
                 random.nextDouble() * 360,
                 random.nextDouble() * 360,
                 random.nextDouble() * 5,

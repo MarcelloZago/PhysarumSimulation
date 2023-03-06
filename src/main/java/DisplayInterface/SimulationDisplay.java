@@ -77,7 +77,7 @@ public class SimulationDisplay extends Canvas implements Runnable {
         Graphics graphics = bs.getDrawGraphics();
 
         //draw in the background
-        graphics.setColor(Color.BLACK);
+        graphics.setColor(Color.WHITE);
         graphics.fillRect(0, 0, WIDTH, HEIGHT);
 
         simulation.render(graphics);
