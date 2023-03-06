@@ -18,8 +18,8 @@ public class TrailMap {
     /**
      * Constructor that generates a new trail map for given dimensions and with a given amount of decay.
      *
-     * @param height height of the trail map to be created
-     * @param width width of the trail map to be created
+     * @param height      height of the trail map to be created
+     * @param width       width of the trail map to be created
      * @param decayAmount amount of decay that will happen in each simulation step
      */
     public TrailMap(int height, int width, double decayAmount) {
@@ -41,13 +41,36 @@ public class TrailMap {
 
     /**
      * This function implements the deposit of an amount of pheromone onto the  trail map at the given coordinates.
-     * @param x x coordinate
-     * @param y y coordinate
+     *
+     * @param x      x coordinate
+     * @param y      y coordinate
      * @param amount amount of pheromone that is deposited
      */
     public void deposit(double x, double y, double amount) {
-        // TODO: fix the rounding of the coordinates to make the usage of this class more consitend
-        trailMap[(int) Math.floor(x)][(int) Math.floor(y)] += amount;
+        // TODO: fix the rounding of the coordinates to make the usage of this class more consistent
+        int boundedX = boundSingleCoordinate((int) Math.round(x), width);
+        int boundedY = boundSingleCoordinate((int) Math.round(y), height);
+
+        trailMap[boundedX][boundedY] += amount;
+    }
+
+    /**
+     * This function bounds a single coordinate for a given upper bound. The lower bound is assumed to be 0.
+     *      - for x coordinate upperBound is to be width
+     *      - for y coordinate upperBound is to be height
+     *
+     * @param coordinate coordinate that will be bound
+     * @param upperBound upper bound that is used
+     * @return bounded coordinate
+     */
+    private int boundSingleCoordinate(int coordinate, int upperBound) {
+        if (coordinate < 0) {
+            return coordinate + upperBound;
+        } else if (coordinate >= upperBound) {
+            return coordinate - upperBound;
+        } else {
+            return coordinate;
+        }
     }
 
     /**
@@ -71,17 +94,8 @@ public class TrailMap {
                         int current_y = y + filter_y;
 
                         // handle the wrapping around for the edge pixels
-                        if (current_x < 0) {
-                            current_x += height;
-                        } else if (current_x >= height) {
-                            current_x -= height;
-                        }
-
-                        if (current_y < 0) {
-                            current_y += width;
-                        } else if (current_y >= width) {
-                            current_y -= width;
-                        }
+                        current_x = boundSingleCoordinate(current_x, width);
+                        current_y = boundSingleCoordinate(current_y, height);
 
                         sum += trailMap[current_x][current_y];
                     }
@@ -106,6 +120,7 @@ public class TrailMap {
 
     /**
      * This function implements the rendering of the trail map. TODO: finish it up
+     *
      * @param graphics
      */
     public void render(Graphics graphics) {
@@ -122,7 +137,6 @@ public class TrailMap {
     }
 
     /**
-     *
      * @param d
      * @return
      */
