@@ -189,10 +189,10 @@ public class Agent {
     /**
      * This function receives an angle and a step size and calculates the respective difference in the x and the y
      * coordinate.
-     *
+     * <p>
      * ATTENTION: This function has a difference return than {@link #angleToDiscreteCoordinate(double, double)}!
      *
-     * @param angle angle that the agents turns
+     * @param angle    angle that the agents turns
      * @param distance step size
      * @return array of differences in the x and y coordinates
      */
