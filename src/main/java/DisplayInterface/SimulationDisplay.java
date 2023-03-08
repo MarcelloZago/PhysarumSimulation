@@ -18,9 +18,10 @@ public class SimulationDisplay extends Canvas implements Runnable {
 
     private int globalCounter = 0;
 
-    public SimulationDisplay(long numberAgents, int sense_angel, double sense_distance, double step_angle, double step_size,
-                             double pheromoneAmount, double decayAmount) {
-        simulation = new Simulation(HEIGHT, WIDTH);
+    public SimulationDisplay(long numberAgents, double senseAngle, double senseDistance, double stepAngle,
+                             double stepSize, double pheromoneAmount, double decayAmount) {
+        simulation = new Simulation(HEIGHT, WIDTH, numberAgents, senseAngle, senseDistance, stepAngle, stepSize,
+                pheromoneAmount, decayAmount, Color.BLACK);
 
         new Window(HEIGHT, WIDTH, "Physarum Simulation", this);
     }

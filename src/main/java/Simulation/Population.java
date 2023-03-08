@@ -32,6 +32,28 @@ public class Population {
     }
 
     /**
+     * Constructor to generate a population with custom parameters.
+     *
+     * @param height          height of the simulation space
+     * @param width           width of the simulation space
+     * @param numberAgents    number of agents in the population
+     * @param senseAngle      sense angle of each agent
+     * @param senseDistance   sensing distance of each agent
+     * @param stepAngle       step angle of each agent
+     * @param stepSize        step size (distance) of each agent per simulation step
+     * @param pheromoneAmount amount of pheromone each agent drops after a move
+     * @param decayAmount     amount of decay of th trail map in each simulation step
+     * @param color           color of the agents in the visualization
+     */
+    public Population(int height, int width, long numberAgents, double senseAngle, double senseDistance,
+                      double stepAngle, double stepSize, double pheromoneAmount, double decayAmount, Color color) {
+        this.agentMap = new AgentMap(numberAgents, height, width, stepAngle, senseAngle, stepSize, senseDistance,
+                pheromoneAmount);
+        this.trailMap = new TrailMap(height, width, decayAmount);
+        this.color = color;
+    }
+
+    /**
      * This function manages a new time step of the simulation for both the agent map
      * and the trail map.
      */
