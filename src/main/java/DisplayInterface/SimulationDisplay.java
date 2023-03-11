@@ -18,12 +18,22 @@ public class SimulationDisplay extends Canvas implements Runnable {
 
     private int globalCounter = 0;
 
+    /**
+     * This variable determines whether the simulation runs in debug mode. This means that the simulation will never
+     * stop nor be displayed.
+     */
+    private final boolean debug = true;
+
     public SimulationDisplay(long numberAgents, double senseAngle, double senseDistance, double stepAngle,
                              double stepSize, double pheromoneAmount, double decayAmount) {
         simulation = new Simulation(HEIGHT, WIDTH, numberAgents, senseAngle, senseDistance, stepAngle, stepSize,
                 pheromoneAmount, decayAmount, Color.BLACK);
 
-        new Window(HEIGHT, WIDTH, "Physarum Simulation", this);
+        if(! debug) {
+            new Window(HEIGHT, WIDTH, "Physarum Simulation", this);
+        } else {
+            this.start();
+        }
     }
 
     public synchronized void start() {
@@ -51,7 +61,8 @@ public class SimulationDisplay extends Canvas implements Runnable {
 
         while(running){
             tick();
-            render();
+            if(! debug)
+                render();
         }
     }
 
